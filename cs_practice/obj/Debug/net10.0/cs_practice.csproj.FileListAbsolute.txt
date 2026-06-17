@@ -1,0 +1,15 @@
+/Users/jan/danjan/hello/cs_practice/obj/Debug/net10.0/cs_practice.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jan/danjan/hello/cs_practice/obj/Debug/net10.0/cs_practice.AssemblyInfoInputs.cache
+/Users/jan/danjan/hello/cs_practice/obj/Debug/net10.0/cs_practice.AssemblyInfo.cs
+/Users/jan/danjan/hello/cs_practice/obj/Debug/net10.0/cs_practice.csproj.CoreCompileInputs.cache
+/Users/jan/danjan/hello/cs_practice/obj/Debug/net10.0/cs_practice.sourcelink.json
+/Users/jan/danjan/hello/cs_practice/bin/Debug/net10.0/cs_practice
+/Users/jan/danjan/hello/cs_practice/bin/Debug/net10.0/cs_practice.deps.json
+/Users/jan/danjan/hello/cs_practice/bin/Debug/net10.0/cs_practice.runtimeconfig.json
+/Users/jan/danjan/hello/cs_practice/bin/Debug/net10.0/cs_practice.dll
+/Users/jan/danjan/hello/cs_practice/bin/Debug/net10.0/cs_practice.pdb
+/Users/jan/danjan/hello/cs_practice/obj/Debug/net10.0/cs_practice.dll
+/Users/jan/danjan/hello/cs_practice/obj/Debug/net10.0/refint/cs_practice.dll
+/Users/jan/danjan/hello/cs_practice/obj/Debug/net10.0/cs_practice.pdb
+/Users/jan/danjan/hello/cs_practice/obj/Debug/net10.0/cs_practice.genruntimeconfig.cache
+/Users/jan/danjan/hello/cs_practice/obj/Debug/net10.0/ref/cs_practice.dll

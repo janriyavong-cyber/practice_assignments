@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SKETCH_MARIO.EXE [PROTOTYPE]</title>
+    <style>
+        body { background: #f0f0f0; display: flex; flex-direction: column; align-items: center; font-family: monospace; }
+        canvas { background: white; border: 2px solid black; margin-top: 20px; }
+        .ui { margin-top: 10px; color: #333; }
+    </style>
+</head>
+<body>
+    <h2>[ SKETCH_CRUSH.EXE ]</h2>
+    <canvas id="gameCanvas" width="600" height="200"></canvas>
+    <div class="ui">Move: [A][D] | Jump: [SPACE] | Collected: <span id="score">0</span></div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+
+        // --- 1. ข้อมูลตัวละคร ---
+        let player = { 
+            x: 50, y: 150, w: 30, h: 30, 
+            dy: 0, 
+            speed: 5, 
+            jumpForce: 12, 
+            grounded: false 
+        };
+        
+        let keys = {}; 
+
+        // --- 2. ข้อมูลไอเทม (ถอด collected ออกเพื่อให้สุ่มใหม่ได้ตลอด) ---
+        let items = [
+            { x: 150, y: 100, w: 15, h: 15 },
+            { x: 300, y: 70, w: 15, h: 15 },
+            { x: 450, y: 90, w: 15, h: 15 }
+        ];
+        
+        const gravity = 0.6;
+        let score = 0;
+
+        window.addEventListener('keydown', (e) => keys[e.code] = true);
+        window.addEventListener('keyup', (e) => keys[e.code] = false);
+
+        function update() {
+            // Logic การเดิน ซ้าย-ขวา
+            if (keys['ArrowLeft'] || keys['KeyA']) player.x -= player.speed;
+            if (keys['ArrowRight'] || keys['KeyD']) player.x += player.speed;
+
+            // Logic การกระโดด (เช็กว่าอยู่บนพื้นไหม)
+            if ((keys['Space'] || keys['ArrowUp'] || keys['KeyW']) && player.grounded) {
+                player.dy = -player.jumpForce;
+                player.grounded = false;
+            }
+
+            // Physics: แรงโน้มถ่วง
+            player.dy += gravity;
+            player.y += player.dy;
+
+            // กันเดินตกขอบจอ
+            if (player.x < 0) player.x = 0;
+            if (player.x + player.w > canvas.width) player.x = canvas.width - player.w;
+
+            // เช็กการแตะพื้น
+            if (player.y + player.h > 180) {
+                player.y = 180 - player.h;
+                player.dy = 0;
+                player.grounded = true;
+            }
+
+            // --- 3. ส่วนเช็กการเก็บของแบบสุ่มใหม่เรื่อยๆ (Infinite Loop) ---
+            items.forEach(item => {
+                if (player.x < item.x + item.w &&
+                    player.x + player.w > item.x &&
+                    player.y < item.y + item.h &&
+                    player.y + player.h > item.y) {
+                    
+                    score++;
+                    scoreEl.innerText = score;
+
+                    // วาร์ปไปเกิดใหม่ที่จุดสุ่มบนจอทันที
+                    item.x = Math.floor(Math.random() * (canvas.width - 40)) + 20; 
+                    item.y = Math.floor(Math.random() * 100) + 30; 
+                }
+            });
+
+            draw();
+            requestAnimationFrame(update);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // วาดพื้น
+            ctx.beginPath();
+            ctx.moveTo(0, 180);
+            ctx.lineTo(600, 180);
+            ctx.stroke();
+
+            // วาดตัวละคร (กล่องดำ)
+            ctx.fillStyle = "black";
+            ctx.fillRect(player.x, player.y, player.w, player.h);
+
+            // วาดของ (กล่องเส้นขอบ)
+            ctx.strokeStyle = "black";
+            items.forEach(item => {
+                ctx.strokeRect(item.x, item.y, item.w, item.h);
+            });
+        }
+
+        update();
+    </script>
+</body>
+</html>

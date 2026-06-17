@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>SKETCH CRUSH - Clean UI</title>
+    <style>
+        body {
+            background-color: #fdfdfd;
+            color: #1a1a1a;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        #game-container {
+            position: relative;
+            border: 4px solid #333;
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.05);
+            background: #fff;
+        }
+        canvas { display: block; }
+        
+        /* สไตล์หน้าจอตอนจบเกม */
+        #overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: none; /* ซ่อนไว้ก่อน */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        #overlay h2 { font-size: 2em; margin: 0; text-transform: uppercase; }
+        #overlay p { margin: 10px 0; color: #666; }
+    </style>
+</head>
+<body>
+
+    <h1>[ SKETCH_CRUSH.EXE ]</h1>
+    
+    <div id="game-container">
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <!-- หน้าจอข้อความ -->
+        <div id="overlay">
+            <h2 id="status-text">STATUS</h2>
+            <p id="sub-text">Press [ SPACE ] to Continue</p>
+        </div>
+    </div>
+
+    <div style="margin-top:15px; color:#999;">( ลูกศร ซ้าย-ขวา เพื่อวิ่ง )</div>
+
+<script>
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const overlay = document.getElementById('overlay');
+const statusText = document.getElementById('status-text');
+
+const SETTINGS = {
+    playerSpeed: 350,
+    crushSpeed: 190,
+    riseSpeed: 130,
+    waitAtTop: 1.2,
+    waitAtBottom: 0.8,
+    hitboxPadding: 8
+};
+
+let player = { x: 40, y: 340, w: 25, h: 40, color: "#222" };
+let crusher = { y: -320, h: 350, state: 'waiting_top', timer: SETTINGS.waitAtTop };
+const safeZones = [{ x: 180, w: 90 }, { x: 420, w: 100 }, { x: 650, w: 90 }];
+
+let keys = {};
+let lastTime = 0;
+let gameState = "PLAYING"; // PLAYING, WIN, DEAD
+
+window.addEventListener('keydown', e => {
+    keys[e.code] = true;
+    // ถ้าเกมหยุดอยู่แล้วกด Space ให้เริ่มใหม่
+    if (e.code === 'Space' && gameState !== "PLAYING") {
+        resetGame();
+    }
+});
+window.addEventListener('keyup', e => keys[e.code] = false);
+
+function showOverlay(title, color) {
+    statusText.innerText = title;
+    statusText.style.color = color;
+    overlay.style.display = 'flex';
+    keys = {}; // ล้างปุ่มกดเพื่อแก้บัคเดินเอง
+}
+
+function update(dt) {
+    if (gameState !== "PLAYING") return;
+
+    if (keys['ArrowRight']) player.x += SETTINGS.playerSpeed * dt;
+    if (keys['ArrowLeft']) player.x -= SETTINGS.playerSpeed * dt;
+
+    if (player.x < 0) player.x = 0;
+    
+    // ชนะเกม
+    if (player.x + player.w > canvas.width) {
+        gameState = "WIN";
+        showOverlay("MISSION COMPLETED", "#2e7d32");
+    }
+
+    // Logic กำแพง
+    switch(crusher.state) {
+        case 'waiting_top':
+            crusher.timer -= dt;
+            if (crusher.timer <= 0) crusher.state = 'falling';
+            break;
+        case 'falling':
+            crusher.y += SETTINGS.crushSpeed * dt;
+            if (crusher.y + crusher.h >= player.y + 10) {
+                checkCollision();
+                if (crusher.y + crusher.h >= 380) {
+                    crusher.state = 'waiting_bottom';
+                    crusher.timer = SETTINGS.waitAtBottom;
+                }
+            }
+            break;
+        case 'waiting_bottom':
+            crusher.timer -= dt;
+            if (crusher.timer <= 0) crusher.state = 'rising';
+            break;
+        case 'rising':
+            crusher.y -= SETTINGS.riseSpeed * dt;
+            if (crusher.y <= -320) {
+                crusher.state = 'waiting_top';
+                crusher.timer = SETTINGS.waitAtTop;
+            }
+            break;
+    }
+}
+
+function checkCollision() {
+    let isInSafeZone = safeZones.some(zone => 
+        (player.x + SETTINGS.hitboxPadding) > zone.x && 
+        (player.x + player.w - SETTINGS.hitboxPadding) < (zone.x + zone.w)
+    );
+
+    if (!isInSafeZone) {
+        gameState = "DEAD";
+        showOverlay("SKETCHED OUT", "#c62828");
+    }
+}
+
+function resetGame() {
+    player.x = 40;
+    crusher.y = -320;
+    crusher.state = 'waiting_top';
+    crusher.timer = SETTINGS.waitAtTop;
+    gameState = "PLAYING";
+    overlay.style.display = 'none';
+    keys = {};
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // วาดพื้นและหลุม (ใช้เส้นขอบเข้มขึ้น)
+    ctx.strokeStyle = "#333";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(0, 380, canvas.width, 20);
+    safeZones.forEach(zone => {
+        ctx.clearRect(zone.x, 380, zone.w, 20); // เจาะพื้น
+        ctx.strokeRect(zone.x, 380, zone.w, 20);
+    });
+
+    // ตัวละคร
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x, player.y, player.w, player.h);
+    ctx.strokeRect(player.x, player.y, player.w, player.h);
+
+    // กำแพง (ใส่สีเทาจางๆ แบบดินสอแรเงา)
+    ctx.fillStyle = "#eee";
+    ctx.fillRect(0, crusher.y, canvas.width, crusher.h);
+    ctx.strokeRect(0, crusher.y, canvas.width, crusher.h);
+    
+    // เส้นบอกระยะเป้าหมาย
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    ctx.moveTo(795, 0); ctx.lineTo(795, 400);
+    ctx.stroke();
+    ctx.setLineDash([]);
+}
+
+function gameLoop(timestamp) {
+    let dt = (timestamp - lastTime) / 1000;
+    lastTime = timestamp;
+    if (dt < 0.1) { update(dt); draw(); }
+    requestAnimationFrame(gameLoop);
+}
+requestAnimationFrame(gameLoop);
+</script>
+</body>
+</html>
