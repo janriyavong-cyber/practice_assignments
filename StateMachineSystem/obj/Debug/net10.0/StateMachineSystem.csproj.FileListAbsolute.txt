@@ -1,0 +1,15 @@
+/Users/jan/danjan/hello/StateMachineSystem/obj/Debug/net10.0/StateMachineSystem.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jan/danjan/hello/StateMachineSystem/obj/Debug/net10.0/StateMachineSystem.AssemblyInfoInputs.cache
+/Users/jan/danjan/hello/StateMachineSystem/obj/Debug/net10.0/StateMachineSystem.AssemblyInfo.cs
+/Users/jan/danjan/hello/StateMachineSystem/obj/Debug/net10.0/StateMachineSystem.csproj.CoreCompileInputs.cache
+/Users/jan/danjan/hello/StateMachineSystem/obj/Debug/net10.0/StateMachineSystem.sourcelink.json
+/Users/jan/danjan/hello/StateMachineSystem/bin/Debug/net10.0/StateMachineSystem
+/Users/jan/danjan/hello/StateMachineSystem/bin/Debug/net10.0/StateMachineSystem.deps.json
+/Users/jan/danjan/hello/StateMachineSystem/bin/Debug/net10.0/StateMachineSystem.runtimeconfig.json
+/Users/jan/danjan/hello/StateMachineSystem/bin/Debug/net10.0/StateMachineSystem.dll
+/Users/jan/danjan/hello/StateMachineSystem/bin/Debug/net10.0/StateMachineSystem.pdb
+/Users/jan/danjan/hello/StateMachineSystem/obj/Debug/net10.0/StateMachineSystem.dll
+/Users/jan/danjan/hello/StateMachineSystem/obj/Debug/net10.0/refint/StateMachineSystem.dll
+/Users/jan/danjan/hello/StateMachineSystem/obj/Debug/net10.0/StateMachineSystem.pdb
+/Users/jan/danjan/hello/StateMachineSystem/obj/Debug/net10.0/StateMachineSystem.genruntimeconfig.cache
+/Users/jan/danjan/hello/StateMachineSystem/obj/Debug/net10.0/ref/StateMachineSystem.dll

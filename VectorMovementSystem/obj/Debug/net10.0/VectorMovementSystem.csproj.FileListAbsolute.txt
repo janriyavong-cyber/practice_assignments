@@ -1,0 +1,15 @@
+/Users/jan/danjan/hello/VectorMovementSystem/bin/Debug/net10.0/VectorMovementSystem
+/Users/jan/danjan/hello/VectorMovementSystem/bin/Debug/net10.0/VectorMovementSystem.deps.json
+/Users/jan/danjan/hello/VectorMovementSystem/bin/Debug/net10.0/VectorMovementSystem.runtimeconfig.json
+/Users/jan/danjan/hello/VectorMovementSystem/bin/Debug/net10.0/VectorMovementSystem.dll
+/Users/jan/danjan/hello/VectorMovementSystem/bin/Debug/net10.0/VectorMovementSystem.pdb
+/Users/jan/danjan/hello/VectorMovementSystem/obj/Debug/net10.0/VectorMovementSystem.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jan/danjan/hello/VectorMovementSystem/obj/Debug/net10.0/VectorMovementSystem.AssemblyInfoInputs.cache
+/Users/jan/danjan/hello/VectorMovementSystem/obj/Debug/net10.0/VectorMovementSystem.AssemblyInfo.cs
+/Users/jan/danjan/hello/VectorMovementSystem/obj/Debug/net10.0/VectorMovementSystem.csproj.CoreCompileInputs.cache
+/Users/jan/danjan/hello/VectorMovementSystem/obj/Debug/net10.0/VectorMovementSystem.sourcelink.json
+/Users/jan/danjan/hello/VectorMovementSystem/obj/Debug/net10.0/VectorMovementSystem.dll
+/Users/jan/danjan/hello/VectorMovementSystem/obj/Debug/net10.0/refint/VectorMovementSystem.dll
+/Users/jan/danjan/hello/VectorMovementSystem/obj/Debug/net10.0/VectorMovementSystem.pdb
+/Users/jan/danjan/hello/VectorMovementSystem/obj/Debug/net10.0/VectorMovementSystem.genruntimeconfig.cache
+/Users/jan/danjan/hello/VectorMovementSystem/obj/Debug/net10.0/ref/VectorMovementSystem.dll

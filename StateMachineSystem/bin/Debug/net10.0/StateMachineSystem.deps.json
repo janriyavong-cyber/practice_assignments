@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "StateMachineSystem/1.0.0": {
+        "runtime": {
+          "StateMachineSystem.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "StateMachineSystem/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
